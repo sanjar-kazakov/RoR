@@ -1,3 +1,0 @@
-class PassCarriage < Carriage
-    
-end
