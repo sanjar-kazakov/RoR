@@ -25,9 +25,6 @@ class Main
         puts "#{index + 1}. #{question}"
         end
     end
-
-    private
-    # Думаю, что нет смысла быть доступными вне класса этим методам.
     
     def get_choice
         loop do
