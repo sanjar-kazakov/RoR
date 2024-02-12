@@ -398,7 +398,6 @@ class Main
         index = gets.chomp.to_i - 1
         if index <= 0 && index > item.size
             puts "Неверное число!"
-
         else
             return item[index]
         end
