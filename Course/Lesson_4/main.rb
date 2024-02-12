@@ -119,6 +119,7 @@ class Main
             type == "Cargo"
             @trains << CargoTrain.new(number, type)
         end
+        # require 'pry'; binding.pry
     end
 
     def add_carriage
@@ -255,7 +256,7 @@ class Main
             puts "Выберите маршрут, в котором хотите удалить промежуточную станцию:"
             route_index = gets.chomp.to_i - 1
 
-            if (route_index >= 0 && route_index < @routes.size)
+            if route_index >= 0 && route_index < @routes.size
                 route = @routes[route_index]
                 puts "Введите промежуточную станцию маршрута:"
                 int_station = gets.chomp.capitalize
@@ -274,80 +275,100 @@ class Main
     def set_route
         if @trains.empty? || @routes.empty?
             puts "Поезд или маршрут не создан."
+
         else
-            show_trains
-            puts "Выберите поезд:"
-            trains_index = gets.chomp.to_i - 1
+        train = validation("номер поезда", @trains, :number)
+        route = validation("маршрут", @routes, :route_stations)
 
-            if trains_index >= 0 && trains_index < @trains.size
-                puts "Выберите маршрут для поезда:"
-                display_routes
-                route_index = gets.chomp.to_i - 1
+        train.set_route(route)
+        puts "Маршрут добавлен поезду: #{train.number}. Поезд на станции #{train.current_station}."
+        # require 'pry'; binding.pry
 
-                if route_index >= 0 && route_index < @routes.size
-                    route = @routes[route_index]
-                    train = @trains[trains_index]
 
-                    train.set_route(route)
-                    puts "Маршрут добавлен поезду: #{train.number}"
-            else
-                puts "Некорректный выбор маршрута"  
-            end   
-            else
-                puts "Некорректный выбор поезда"
-            end
+        # if @trains.empty? || @routes.empty?
+        #     puts "Поезд или маршрут не создан."
+        # else
+        #     show_trains
+        #     puts "Выберите поезд:"
+        #     trains_index = gets.chomp.to_i - 1
+
+        #     if trains_index >= 0 && trains_index < @trains.size
+        #         puts "Выберите маршрут для поезда:"
+        #         display_routes
+        #         route_index = gets.chomp.to_i - 1
+
+        #         if route_index >= 0 && route_index < @routes.size
+        #             route = @routes[route_index]
+        #             train = @trains[trains_index]
+
+        #             train.set_route(route)
+        #             puts "Маршрут добавлен поезду: #{train.number}"
+        #     else
+        #         puts "Некорректный выбор маршрута"  
+        #     end   
+        #     else
+        #         puts "Некорректный выбор поезда"
+            # end
         end
     end
 
     def move_next_station
-        if (@trains && @routes).empty?
+        if @trains.empty? || @routes.empty?
             puts "Сначала создайте маршрут и поезд."
-        elsif
-            display_routes
-            puts "Выберите маршрут:"
-            route_index = gets.chomp.to_i - 1
+        else
+            train = validation("номер поезда", @trains, :number)
+            train.move_forward
+            puts "Поезд #{train.type} №#{train.number} перемещен на следующую станцию: #{train.current_station}."
+
+
+            # display_routes
+            # puts "Выберите маршрут:"
+            # route_index = gets.chomp.to_i - 1
     
-            if route_index >= 0 && route_index < @routes.size
-                puts "Выберите поезд:"
-                @trains.each_with_index { 
-                    |train, index| 
-                    puts "#{index + 1}. #{train.type} #{train.number}" }
-            end
-                train_index = gets.chomp.to_i - 1
-                selected_train = @trains[train_index]
+            # if route_index >= 0 && route_index < @routes.size
+            #     puts "Выберите поезд:"
+            #     @trains.each_with_index { 
+            #         |train, index| 
+            #         puts "#{index + 1}. #{train.type} #{train.number}" }
+            # end
+            #     train_index = gets.chomp.to_i - 1
+            #     selected_train = @trains[train_index]
                 
-            if train_index.between?(0, @trains.size - 1) && selected_train.route
+            # if train_index.between?(0, @trains.size - 1) && selected_train.route
                 
-                selected_train.move_forward
-                puts "Поезд перемещен на следующую станцию: #{selected_train.current_station}."
-                # require 'pry'; binding.pry
-                
-            end
+            #     selected_train.move_forward
+            #     puts "Поезд перемещен на следующую станцию: #{selected_train.current_station}."
+            # end
         end
     end
 
     def move_previous_station
-        if (@trains && @routes).empty?
+        if @trains.empty? || @routes.empty?
             puts "Сначала создайте маршрут и поезд."
-        elsif
-            display_routes
-            puts "Выберите маршрут:"
-            route_index = gets.chomp.to_i - 1
+        else
+            train = validation("номер поезда", @trains, :number)
+            train.move_backward
+            puts "Поезд #{train.type} №#{train.number} возвратился на станцию #{train.current_station}."
+
+
+            # display_routes
+            # puts "Выберите маршрут:"
+            # route_index = gets.chomp.to_i - 1
     
-            if route_index >= 0 && route_index < @routes.size
-                puts "Выберите поезд:"
-                @trains.each_with_index { 
-                    |train, index| 
-                    puts "#{index + 1}. #{train.type} #{train.number}" }
-            end
-                train_index = gets.chomp.to_i - 1
-                selected_train = @trains[train_index]
+            # if route_index >= 0 && route_index < @routes.size
+            #     puts "Выберите поезд:"
+            #     @trains.each_with_index { 
+            #         |train, index| 
+            #         puts "#{index + 1}. #{train.type} #{train.number}" }
+            # end
+            #     train_index = gets.chomp.to_i - 1
+            #     selected_train = @trains[train_index]
 
-            if train_index.between?(0, @trains.size - 1) && selected_train.route
+            # if train_index.between?(0, @trains.size - 1) && selected_train.route
 
-                selected_train.move_backward
-                puts "Поезд перемещен на предыдущую станцию #{selected_train.current_station}."
-            end
+            #     selected_train.move_backward
+            #     puts "Поезд перемещен на предыдущую станцию #{selected_train.current_station}."
+            # end
         end
     end
 
@@ -367,6 +388,22 @@ class Main
             end
         end
     end
+
+    def validation(title, item, number)
+
+        puts "Выберите #{title}:"
+        item.each_with_index {|n, i| 
+        puts " #{i + 1}. #{(n).send(number)}"}
+    
+        index = gets.chomp.to_i - 1
+        if index <= 0 && index > item.size
+            puts "Неверное число!"
+
+        else
+            return item[index]
+        end
+    end
+
 
 end
 
