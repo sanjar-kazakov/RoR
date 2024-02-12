@@ -85,6 +85,9 @@ class Main
         end
     end
 
+    private
+    # Думаю, что нет смысла быть доступными вне класса этим методам.
+
     def create_station
         puts "Введите название станции:"
         station_name = gets.chomp.capitalize
@@ -117,41 +120,6 @@ class Main
             @trains << CargoTrain.new(number, type)
         end
     end
-
-    # def add_carriage
-    #     puts "Введите тип поезда (Passenger; Cargo):"
-    #     type = gets.chomp.capitalize
-
-    #     case type
-    #         when "Passenger"
-    #         @trains.each_with_index {
-    #             |train, index| 
-    #             puts "Выберите поезд для добавления вагона \n #{index + 1}. #{train.type}, #{train.number};"}
-    #             train_index = gets.chomp.to_i - 1
-
-    #         if train_index.between?(0, @trains.size - 1)
-    #             pass_carriage = PassCarriage.new(:passenger)
-    #             @trains[train_index].add_carriage(pass_carriage)
-    #         else
-    #             puts "Такого поезда нет"
-    #         end
-
-    #         when "Cargo"
-    #         @trains.each_with_index {
-    #             |train, index| 
-    #             puts "Выберите поезд для добавления вагона \n #{index + 1}. #{train.type}, #{train.number};" }
-    #             train_index = gets.chomp.to_i - 1
-                
-    #         if train_index.between?(0, @trains.size - 1)
-    #             cargo_carriage = CargoCarriage.new(:cargo)
-    #             @trains[train_index].add_carriage(cargo_carriage)
-    #         else
-    #             puts "Такого типа поезда нет"
-    #         end
-
-    #         require 'pry'; binding.pry
-    #     end
-    # end
 
     def add_carriage
         
@@ -401,5 +369,5 @@ class Main
     end
 
 end
-main = Main.new
-main.get_choice
+
+main = Main.new.get_choice
