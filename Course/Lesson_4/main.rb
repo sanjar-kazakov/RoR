@@ -122,10 +122,9 @@ class Main
         # require 'pry'; binding.pry
     end
 
-    def add_carriage
-         
+    def add_carriage 
         show_trains
-        train_index = ask("Выберите поезд:").to_i - 1
+            train_index = ask("Выберите поезд:").to_i - 1
                 
             if train_index.between?(0, @trains.size - 1)
                 selected_train = @trains[train_index]
@@ -146,20 +145,18 @@ class Main
         end
     end
 
-    def remove_carriage
-        
+    def remove_carriage 
         show_trains
-        train_index = ask("Выберите поезд:").to_i - 1
+            train_index = ask("Выберите поезд:").to_i - 1
                 
             if train_index.between?(0, @trains.size - 1)
                 selected_train = @trains[train_index]
                 
                 if selected_train.carriages.empty?
                     puts "Вагонов у поезда нет"
-
                 elsif
-                selected_train.remove_carriage
-                puts "Вагон отцеплен"
+                    selected_train.remove_carriage
+                    puts "Вагон отцеплен"
             else
                 puts "Такого поезда нет"
             end
@@ -178,7 +175,6 @@ class Main
     end
 
     def create_route
-
         first_station = ask("Ведите начальную станцию:").capitalize
         last_station = ask("Ведите конечную станцию:").capitalize
 
@@ -206,17 +202,15 @@ class Main
     def remove_station
         if @stations.empty?
             puts "Созданных cтанций нет."
+        else
+            remove_station = ask("Введите станцию, которую необходимо исключить:").capitalize
+            station_to_remove = @stations.find {|station| station.name == remove_station }
 
+            if station_to_remove
+                @stations.delete(station_to_remove)
+                puts "Станция #{remove_station} успешно удалена."
             else
-                remove_station = ask("Введите станцию, которую необходимо исключить:").capitalize
-
-                station_to_remove = @stations.find {|station| station.name == remove_station }
-
-                if station_to_remove
-                    @stations.delete(station_to_remove)
-                    puts "Станция #{remove_station} успешно удалена."
-                else
-                    puts "Такой станции в списке нет."
+                puts "Такой станции в списке нет."
             end
         end
     end
@@ -241,10 +235,8 @@ class Main
     end
 
     def remove_route_station
-
         if @routes.empty? 
             puts "Созданных маршрутов нет. Сначала создайте маршрут и добавьте промежуточную станцию."
-
         elsif
             display_routes
             route_index = ask("Выберите маршрут, в котором хотите удалить промежуточную станцию:").to_i - 1
@@ -267,7 +259,6 @@ class Main
     def set_route
         if @trains.empty? || @routes.empty?
             puts "Поезд или маршрут не создан."
-
         else
         train = validation("номер поезда", @trains, :number)
         route = validation("маршрут", @routes, :route_stations)
@@ -275,32 +266,6 @@ class Main
         train.set_route(route)
         puts "Маршрут добавлен поезду: #{train.number}. Поезд на станции #{train.current_station}."
         # require 'pry'; binding.pry
-
-
-        # if @trains.empty? || @routes.empty?
-        #     puts "Поезд или маршрут не создан."
-        # else
-        #     show_trains
-        #     puts "Выберите поезд:"
-        #     trains_index = gets.chomp.to_i - 1
-
-        #     if trains_index >= 0 && trains_index < @trains.size
-        #         puts "Выберите маршрут для поезда:"
-        #         display_routes
-        #         route_index = gets.chomp.to_i - 1
-
-        #         if route_index >= 0 && route_index < @routes.size
-        #             route = @routes[route_index]
-        #             train = @trains[trains_index]
-
-        #             train.set_route(route)
-        #             puts "Маршрут добавлен поезду: #{train.number}"
-        #     else
-        #         puts "Некорректный выбор маршрута"  
-        #     end   
-        #     else
-        #         puts "Некорректный выбор поезда"
-            # end
         end
     end
 
@@ -311,26 +276,6 @@ class Main
             train = validation("номер поезда", @trains, :number)
             train.move_forward
             puts "Поезд #{train.type} №#{train.number} перемещен на следующую станцию: #{train.current_station}."
-
-
-            # display_routes
-            # puts "Выберите маршрут:"
-            # route_index = gets.chomp.to_i - 1
-    
-            # if route_index >= 0 && route_index < @routes.size
-            #     puts "Выберите поезд:"
-            #     @trains.each_with_index { 
-            #         |train, index| 
-            #         puts "#{index + 1}. #{train.type} #{train.number}" }
-            # end
-            #     train_index = gets.chomp.to_i - 1
-            #     selected_train = @trains[train_index]
-                
-            # if train_index.between?(0, @trains.size - 1) && selected_train.route
-                
-            #     selected_train.move_forward
-            #     puts "Поезд перемещен на следующую станцию: #{selected_train.current_station}."
-            # end
         end
     end
 
@@ -341,26 +286,6 @@ class Main
             train = validation("номер поезда", @trains, :number)
             train.move_backward
             puts "Поезд #{train.type} №#{train.number} возвратился на станцию #{train.current_station}."
-
-
-            # display_routes
-            # puts "Выберите маршрут:"
-            # route_index = gets.chomp.to_i - 1
-    
-            # if route_index >= 0 && route_index < @routes.size
-            #     puts "Выберите поезд:"
-            #     @trains.each_with_index { 
-            #         |train, index| 
-            #         puts "#{index + 1}. #{train.type} #{train.number}" }
-            # end
-            #     train_index = gets.chomp.to_i - 1
-            #     selected_train = @trains[train_index]
-
-            # if train_index.between?(0, @trains.size - 1) && selected_train.route
-
-            #     selected_train.move_backward
-            #     puts "Поезд перемещен на предыдущую станцию #{selected_train.current_station}."
-            # end
         end
     end
 
