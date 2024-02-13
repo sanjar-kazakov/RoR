@@ -25,63 +25,59 @@ class Main
         puts "#{index + 1}. #{question}"
         end
     end
-    
+
+    def dividing_line
+        puts  "-" * 30
+        puts "Выберите действие, от 1 до 14:"
+    end
+
     def get_choice
+        gets.chomp.to_i
+    end
+
+    def run
         loop do
-            puts  "-" * 30
-            puts "Выберите действие, от 1 до 14:"
+            dividing_line
             display_questions
-            choice = gets.chomp.to_i
+            choice = get_choice
+            ask_for_action(choice)
+        end
+    end
 
-            case choice
-            when 1 
-                create_station
-
-            when 2
-                remove_station
-
-            when 3
-                show_stations
-
-            when 4
-                create_train 
-
-            when 5
-                show_trains
-
-            when 6
-                create_route
-
-            when 7
-                display_routes
-                
-            when 8
-                add_station
-
-            when 9
-                remove_route_station
-
-            when 10
-                set_route
-
-            when 11
-                move_next_station
-
-            when 12
-                move_previous_station  
-
-            when 13
-                show_trains_on_the_station
-
-            when 14
-                add_carriage
-
-            when 15
-                remove_carriage
-
-            when 16
-                break
-            end
+    def ask_for_action(choice)
+        case choice
+        when 1 
+            create_station
+        when 2
+            remove_station
+        when 3
+            show_stations
+        when 4
+            create_train 
+        when 5
+            show_trains
+        when 6
+            create_route
+        when 7
+            display_routes
+        when 8
+            add_station
+        when 9
+            remove_route_station
+        when 10
+            set_route
+        when 11
+            move_next_station
+        when 12
+            move_previous_station  
+        when 13
+            show_trains_on_the_station
+        when 14
+            add_carriage
+        when 15
+            remove_carriage
+        when 16
+            exit
         end
     end
 
@@ -107,11 +103,15 @@ class Main
         end
     end
 
+    def ask(question)
+        puts question
+        gets.chomp
+    end
+
     def create_train
-        puts "Введите номер поезда:"
-        number = gets.chomp
-        puts "Введите тип поезда (Passenger; Cargo):"
-        type = gets.chomp.capitalize
+        number = ask("Введите номер поезда:")
+        type = ask( "Введите тип поезда (Passenger; Cargo):").capitalize
+
         puts "Поезд #{type} #{number} создан!"
         if type == "Passenger"
             @trains << PassTrain.new(number, type)
@@ -123,10 +123,9 @@ class Main
     end
 
     def add_carriage
-        
-        puts "Выберите поезд:"
+         
         show_trains
-        train_index = gets.chomp.to_i - 1
+        train_index = ask("Выберите поезд:").to_i - 1
                 
             if train_index.between?(0, @trains.size - 1)
                 selected_train = @trains[train_index]
@@ -149,9 +148,8 @@ class Main
 
     def remove_carriage
         
-        puts "Выберите поезд:"
         show_trains
-        train_index = gets.chomp.to_i - 1
+        train_index = ask("Выберите поезд:").to_i - 1
                 
             if train_index.between?(0, @trains.size - 1)
                 selected_train = @trains[train_index]
@@ -180,10 +178,9 @@ class Main
     end
 
     def create_route
-        puts "Ведите начальную станцию:"
-        first_station = gets.chomp.capitalize
-        puts "Ведите конечную станцию:"
-        last_station = gets.chomp.capitalize
+
+        first_station = ask("Ведите начальную станцию:").capitalize
+        last_station = ask("Ведите конечную станцию:").capitalize
 
         route = Route.new(first_station, last_station)
         puts "Маршрут #{route.route_stations.join(' - ')} создан!"
@@ -211,8 +208,7 @@ class Main
             puts "Созданных cтанций нет."
 
             else
-                puts "Введите станцию, которую необходимо исключить:"
-                remove_station = gets.chomp.capitalize
+                remove_station = ask("Введите станцию, которую необходимо исключить:").capitalize
 
                 station_to_remove = @stations.find {|station| station.name == remove_station }
 
@@ -230,13 +226,11 @@ class Main
             puts "Созданных маршрутов нет. Сначала создайте маршрут."
         elsif
             display_routes
-            puts "Выберите маршрут, к которому хотите добавить промежуточную станцию:"
-            route_index = gets.chomp.to_i - 1
+            route_index = ask("Выберите маршрут, к которому хотите добавить промежуточную станцию:").to_i - 1
     
             if route_index >= 0 && route_index < @routes.size
                 route = @routes[route_index]
-                puts "Введите промежуточную станцию маршрута:"
-                int_station = gets.chomp.capitalize
+                int_station = ask("Введите промежуточную станцию маршрута:").capitalize
         
                 route.add_int_station(int_station)
                 puts "Промежуточная станция добавлена в маршрут #{route.route_stations.join(' - ')}"
@@ -253,13 +247,11 @@ class Main
 
         elsif
             display_routes
-            puts "Выберите маршрут, в котором хотите удалить промежуточную станцию:"
-            route_index = gets.chomp.to_i - 1
+            route_index = ask("Выберите маршрут, в котором хотите удалить промежуточную станцию:").to_i - 1
 
             if route_index >= 0 && route_index < @routes.size
                 route = @routes[route_index]
-                puts "Введите промежуточную станцию маршрута:"
-                int_station = gets.chomp.capitalize
+                int_station = ask("Введите промежуточную станцию маршрута:").capitalize
 
                 if route.remove_int_station(int_station)
                     puts "Промежуточная станция удалена из маршрута #{route.route_stations.join(' - ')}"
@@ -406,4 +398,4 @@ class Main
 
 end
 
-main = Main.new.get_choice
+main = Main.new.run
