@@ -11,17 +11,13 @@ class Route
     end
 
     def add_int_station(int_station)
-        self.route_stations.insert(-2, int_station)
+        route_stations.insert(-2, int_station)
     end
 
     def remove_int_station(int_station)
-        if (self.route_stations.include?(int_station)) && (route_stations.size > 2)
-        self.route_stations.delete(int_station)
+        if (route_stations.include?(int_station)) && (route_stations.size > 2)
+        route_stations.delete(int_station)
         else
         end
     end
-    
-    # def station
-    #     @route_stations
-    # end
 end

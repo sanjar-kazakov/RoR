@@ -124,7 +124,10 @@ class Main
         # require 'pry'; binding.pry
     end
 
-    def add_carriage 
+    def add_carriage
+        if @trains.empty?
+            puts "Поезда не созданы"
+        else
         show_trains
             train_index = ask("Выберите поезд:").to_i - 1
                 
@@ -133,18 +136,19 @@ class Main
 
             case selected_train.type 
             when "Passenger"
-                pass_carriage = PassCarriage.new(:passenger)
+                pass_carriage = PassCarriage.new
                 selected_train.add_carriage(pass_carriage)
                 puts "Вагон добавлен!"
 
             when "Cargo"
-                cargo_carriage = CargoCarriage.new(:cargo)
+                cargo_carriage = CargoCarriage.new
                 selected_train.add_carriage(cargo_carriage)
                 puts "Вагон добавлен!"
             else
                 puts "Такого поезда нет"
             end
         end
+    end
     end
 
     def remove_carriage 
