@@ -34,9 +34,9 @@ class Train
         @type = type
         @speed = 0
         @carriages = []
+        validate!
         @@trains << self
         register_instance
-        validate!
     end
 
     NUMBER_FORMAT = /^[a-z0-9]{3}-?[a-z0-9]{2}$/i

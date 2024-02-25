@@ -10,8 +10,8 @@ class Route
 
     def initialize(first_station, last_station)
         @route_stations = [first_station, last_station]
-        register_instance
         validate!
+        register_instance
     end
 
     ROUTE_NAME_FORMAT = /^[a-zA-Z]{1,10}$/

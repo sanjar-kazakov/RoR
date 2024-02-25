@@ -17,9 +17,9 @@ include Validation
     def initialize(name)
         @name = name
         @trains = []
+        validate!
         @@all_stations << self
         register_instance
-        validate!
     end
 
     NAME_FORMAT = /^[a-zA-Z]+$/ # здесь мог добавить сразу валидацию на кол-во символов, 
