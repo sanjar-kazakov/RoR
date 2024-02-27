@@ -1,65 +1,42 @@
-module Validation
-
-    def valid?
-        validate!
-        true
-    rescue
-        false
-    end
-
-    def validate!
-        case self
-        when Train
-            raise "Необходимо ввести номер поезда" if number.nil?
-            raise "Wrong number format!!!" unless number =~ Train::NUMBER_FORMAT 
-        when Route
-            raise "Начальная и конечная станции обязательны!" if (route_stations[0] && route_stations[1]).nil?
-        when Station
-            raise "Название станции обязательно!" if name.nil?
-            raise "Название должно состоять только из латинских букв." if name !~ Station::NAME_FORMAT
-            raise "Название должно состоять из не более 10 букв." if name.length > 10
-        end
-    end
+1.step(9,2) do |n|
+    puts "#{n} situp"
+    puts "#{n} pushup"
+    puts "#{n} chinup"
 end
 
-class Train
-include Validation
 
-    attr_accessor :number
-    def initialize(number = nil)
-        @number = number
-        validate!
+flyers = []
+
+class Flyer
+    attr_reader :name, :email, :miles_flown
+  
+    def initialize(name, email, miles_flown)
+      @name = name
+      @email = email
+      @miles_flown = miles_flown
+    end
+  
+    def to_s
+      "#{name} (#{email}): #{miles_flown}"
     end
 
-    NUMBER_FORMAT = /^[a-z0-9]{3}-?[a-z0-9]{2}$/i
-end
-
-class Route
-    include Validation
-
-    attr_accessor :route_stations
-
-    def initialize(first_station = nil, last_station = nil)
-        @route_stations = [first_station, last_station]
-        validate!
+    def this_is_a_block
+        yield
+        yield
+        yield
     end
-end
-
-class Station
-    include Validation
     
-    attr_accessor :name
-
-    def initialize(name = nil)
-        @name = name
-        validate!
-    end
-     
-    NAME_FORMAT = /^[a-zA-Z]{1,10}$/
+    this_is_a_block {puts "This is a block"}
 end
 
+flyer = Flyer.new("flyer1", "flyer@example.com", 1000)
+
+1.upto(5) do |n|
+    flyers << Flyer.new("flyer#{n}", "flyer#{n}@example.com", n * 1000)
+end
+
+puts flyers
 
 
-train = Train.new("ABC-22")
-route = Route.new("Minsk", "Moscow")
-station = Station.new("grodno")
+
+
