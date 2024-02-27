@@ -1,4 +1,4 @@
-class CargoCarriage #< Carriage
+class CargoCarriage < Carriage
     
     attr_accessor :volume, :volume_taken
 
@@ -6,7 +6,7 @@ class CargoCarriage #< Carriage
         @type = :cargo
         @volume = volume
         @volume_taken = 0
-        # super()
+        super()
     end
 
     def occupy_volume(volume)
@@ -23,4 +23,4 @@ class CargoCarriage #< Carriage
 
 end
 
-cargo = CargoCarriage.new(5)
+# cargo = CargoCarriage.new(5)

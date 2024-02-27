@@ -345,7 +345,7 @@ class Main
     #         end
     #     end
     # end
-
+##### NEW METHODS
     def occupy
         if @trains.empty?
             puts "Поезда не созданы"
@@ -394,7 +394,7 @@ class Main
             end
         end
     end
-
+#######
     def choice_validation(title, item, number)
         puts "Выберите #{title}:"
         item.each_with_index {|n, i| 
