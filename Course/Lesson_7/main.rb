@@ -346,24 +346,31 @@ class Main
     #     end
     # end
 ##### NEW METHODS
+
     def occupy
         if @trains.empty?
-            puts "Поезда не созданы"
+          puts "Поезда не созданы"
         else
-            train = choice_validation("поезд", @trains, :number)
-            carriage = choice_validation("вагон", train.carriages, :type)
-            return (puts "Вагонов нет.") if carriage.nil?
-            if carriage.type == :cargo
-                vol = ask("Введите объем:").to_i
-                carriage.occupy_volume(vol)
-                puts "Объем занят.\nОсталось #{carriage.remaining_volume}"
-            elsif
-                carriage.type == :passenger
-                carriage.take_a_seat
-                puts "Место занято.\nОсталось мест: #{carriage.seats_avaliable}"
+          train = choice_validation("поезд", @trains, :number)
+          carriage = choice_validation("вагон", train.carriages, :type)
+          
+          return (puts "Вагонов нет.") if carriage.nil?
+      
+          if carriage.type == :cargo
+            vol = ask("Введите объем:").to_i
+      
+            if vol > carriage.remaining_volume
+              puts "Введено значение превышающее количество свободного.\nСвободно: #{carriage.remaining_volume}"
+            else
+              carriage.occupy_volume(vol)
+              puts "Объем занят.\nОсталось #{carriage.remaining_volume}"
             end
+          elsif carriage.type == :passenger
+            carriage.take_a_seat
+            puts "Место занято.\nОсталось мест: #{carriage.seats_avaliable}"
+          end
         end
-    end
+      end
 
     def train_list
         if @stations.empty? 

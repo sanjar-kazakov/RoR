@@ -10,7 +10,11 @@ class PassCarriage < Carriage
     end
 
     def take_a_seat
-        @seats_taken += 1 if @seats_taken < @seats 
+     if @seats_taken < @seats
+        @seats_taken += 1
+    else
+        return (puts "Мест свободных больше нет")
+    end
     end
 
     def seats_occupied
