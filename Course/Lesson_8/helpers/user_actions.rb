@@ -2,26 +2,13 @@
 module UserActions
   def ask_for_action(choice)
     user_actions = {
-      1 => method(:create_station),
-      2 => method(:remove_station),
-      3 => method(:show_stations),
-      4 => method(:create_train),
-      5 => method(:add_carriage),
-      6 => method(:remove_carriage),
-      7 => method(:show_trains),
-      8 => method(:add_train_to_station),
-      9 => method(:train_list),
-      10 => method(:cargo_list),
-      11 => method(:occupy),
-      12 => method(:create_route),
-      13 => method(:display_routes),
-      14 => method(:set_route),
-      15 => method(:add_station),
-      16 => method(:remove_route_station),
-      17 => method(:move_next_station),
-      18 => method(:move_previous_station),
-      19 => method(:find_train_by_number),
-      20 => method(:exit)
+      1 => method(:create_station), 2 => method(:remove_station), 3 => method(:show_stations),
+      4 => method(:create_train), 5 => method(:add_carriage), 6 => method(:remove_carriage),
+      7 => method(:show_trains), 8 => method(:add_train_to_station), 9 => method(:train_list),
+      10 => method(:cargo_list), 11 => method(:occupy), 12 => method(:create_route),
+      13 => method(:display_routes), 14 => method(:set_route), 15 => method(:add_station),
+      16 => method(:remove_route_station), 17 => method(:move_next_station), 18 => method(:move_previous_station),
+      19 => method(:find_train_by_number), 20 => method(:exit)
     }
 
     action = user_actions[choice]
