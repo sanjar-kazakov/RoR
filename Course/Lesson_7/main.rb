@@ -46,14 +46,14 @@ class Main
 
     def ask_for_action(choice)
         case choice
-        when 1 
+        when 1
             create_station
         when 2
             remove_station
         when 3
             show_stations
         when 4
-            create_train 
+            create_train
         when 5
             add_carriage
         when 6
@@ -69,7 +69,7 @@ class Main
         when 11
             occupy
         when 12
-            create_route  
+            create_route
         when 13
             display_routes
         when 14
@@ -116,7 +116,7 @@ class Main
         else
             puts "Список созданных станций:"
             @stations.each_with_index do |station, index|
-            puts "#{index + 1}. #{station.name}" 
+            puts "#{index + 1}. #{station.name}"
             end
         end
     end
@@ -148,7 +148,7 @@ class Main
             puts "Созданные поезда:"
             @trains.each_with_index do |train, index|
                 puts "#{index + 1}. #{train.type.capitalize}, №#{train.number}"
-            end  
+            end
         end
     end
 
@@ -188,11 +188,11 @@ class Main
         else
         show_trains
             train_index = ask("Выберите поезд:").to_i - 1
-                
+
             if train_index.between?(0, @trains.size - 1)
                 selected_train = @trains[train_index]
 
-            case selected_train.type 
+            case selected_train.type
             when :passenger
                 pass_seats = ask("Введите количество мест в вагоне:").to_i
                 pass_carriage = PassCarriage.new(pass_seats)
@@ -210,13 +210,13 @@ class Main
     end
     end
 
-    def remove_carriage 
+    def remove_carriage
         show_trains
             train_index = ask("Выберите поезд:").to_i - 1
-                
+
             if train_index.between?(0, @trains.size - 1)
                 selected_train = @trains[train_index]
-                
+
                 if selected_train.carriages.empty?
                     puts "Вагонов у поезда нет"
                 elsif
@@ -266,7 +266,7 @@ class Main
     end
 
     def remove_route_station
-        if @routes.empty? 
+        if @routes.empty?
             puts "Созданных маршрутов нет. Сначала создайте маршрут и добавьте промежуточную станцию."
         elsif
             display_routes
@@ -353,12 +353,12 @@ class Main
         else
           train = choice_validation("поезд", @trains, :number)
           carriage = choice_validation("вагон", train.carriages, :type)
-          
+
           return (puts "Вагонов нет.") if carriage.nil?
-      
+
           if carriage.type == :cargo
             vol = ask("Введите объем:").to_i
-      
+
             if vol > carriage.remaining_volume
               puts "Введено значение превышающее количество свободного.\nСвободно: #{carriage.remaining_volume}"
             else
@@ -373,11 +373,11 @@ class Main
       end
 
     def train_list
-        if @stations.empty? 
+        if @stations.empty?
             puts "Станции не созданы"
         else
         station = choice_validation("станцию", @stations, :name)
-        station.each_train do |train| 
+        station.each_train do |train|
             puts "Поезд №: #{train.number}\n Тип: #{train.type}\n Вагоны #{train.carriages}"
         end
         end
@@ -392,7 +392,7 @@ class Main
                 puts "Тип вагона: #{carriage.type.capitalize}"
                 if carriage.type == :cargo
                     puts "Объем вагона:#{carriage.volume}\nЗанято:#{carriage.volume_taken} "
-                elsif 
+                elsif
                     carriage.type == :passenger
                     puts "Количество мест: #{carriage.seats}\nЗанято: #{carriage.seats_taken}"
                 else
@@ -404,9 +404,9 @@ class Main
 #######
     def choice_validation(title, item, number)
         puts "Выберите #{title}:"
-        item.each_with_index {|n, i| 
+        item.each_with_index {|n, i|
         puts " #{i + 1}. #{(n).send(number)}"}
-    
+
         index = gets.chomp.to_i - 1
         if index <= 0 && index > item.size
             puts "Неверное число!"

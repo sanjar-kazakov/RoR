@@ -1,5 +1,4 @@
 module Validation
-
     def valid?
         validate!
         true
@@ -10,14 +9,29 @@ module Validation
     def validate!
         case self
         when Train
-            raise "Неверный формат номера поезда! \n Правильный формат - три буквы, две цифры (ABC-22)!!!" unless number =~ Train::NUMBER_FORMAT 
+            train_validation
         when Route
-            # raise "Начальная и конечная станции обязательны!" if (route_stations[0] && route_stations[1]).nil?
-            raise "Название должно состоять только из латинских букв в количестве не более 10." unless route_stations.all? { |stations| stations =~ Route::ROUTE_NAME_FORMAT}
+            route_validation
         when Station
-            # raise "Название станции обязательно!" if name.nil?
-            raise "Название должно состоять только из латинских букв." if name !~ Station::NAME_FORMAT
-            raise "Название должно состоять из не более 10 букв." if name.length > 10
+            station_validation
         end
+    end
+
+    def train_validation
+        unless number =~ Train::NUMBER_FORMAT
+            raise "Неверный формат номера поезда!" \
+                  "Правильный формат - три буквы, две цифры (ABC-22)!!!"
+        end
+    end
+
+    def route_validation
+        unless route_stations.all? { |stations| stations =~ Route::ROUTE_NAME_FORMAT }
+        raise "Название должно состоять только из латинских букв в количестве не более 10."
+        end
+    end
+
+    def station_validation
+        raise "Название должно состоять только из латинских букв." if name !~ Station::NAME_FORMAT
+        raise "Название должно состоять из не более 10 букв." if name.length > 10
     end
 end

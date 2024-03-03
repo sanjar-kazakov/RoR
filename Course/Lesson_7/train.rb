@@ -16,7 +16,7 @@ class Train
     end
 
     def self.find(train_number)
-        found_trains =  @@trains.detect { |train| train.number == train_number }
+        @@trains.detect { |train| train.number == train_number }
     end
 
     def initialize(number)
@@ -32,7 +32,7 @@ class Train
     NUMBER_FORMAT = /^[a-z0-9]{3}-?[a-z0-9]{2}$/i
 
     def accelerate
-        @speed += 10 
+        @speed += 10
     end
 
     def brake
@@ -48,20 +48,20 @@ class Train
     def previous_station
         route.route_stations[@current_station_num - 1] unless @route.nil?
     end
-    
+
     def current_station
         route.route_stations[@current_station_num]
     end
-    
+
     def next_station
         route.route_stations[@current_station_num + 1] unless @route.nil?
         # require 'pry'; binding.pry
     end
-    
+
     def move_forward
         @current_station_num += 1 if next_station
     end
-    
+
     def move_backward
         @current_station_num -= 1 if previous_station
     end

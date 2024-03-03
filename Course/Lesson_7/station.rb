@@ -6,13 +6,13 @@ class Station
 include InstanceCounter
 include Validation
 
-    attr_accessor :name, :trains
-
     @@all_stations = []
 
     def self.all
         @@all_stations
     end
+
+    attr_accessor :name, :trains
 
     def initialize(name)
         @name = name
@@ -22,8 +22,8 @@ include Validation
         register_instance
     end
 
-    NAME_FORMAT = /^[a-zA-Z]+$/ # здесь мог добавить сразу валидацию на кол-во символов, 
-    # не знал насколько нужно было показать валидацию на кол-во символов отдельным методом. 
+    NAME_FORMAT = /^[a-zA-Z]+$/.freeze # здесь мог добавить сразу валидацию на кол-во символов,
+    # не знал насколько нужно было показать валидацию на кол-во символов отдельным методом.
     # Если не критично, исправлю в следующем задании
 
     def add_train(train)
@@ -33,6 +33,7 @@ include Validation
     def depart_train(train)
         @trains.delete(train)
     end
+
     def trains_by_type(type)
         @trains.select do |train|
             train.type == type
@@ -40,6 +41,6 @@ include Validation
     end
 
     def each_train(&block)
-        @trains.each {|train| block.call(train)}
+        @trains.each { |train| block.call(train) }
     end
 end

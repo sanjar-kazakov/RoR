@@ -20,7 +20,6 @@ class CargoCarriage < Carriage
     def remaining_volume
         @volume - @volume_taken
     end
-
 end
 
 # cargo = CargoCarriage.new(5)
