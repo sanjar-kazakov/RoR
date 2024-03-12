@@ -23,7 +23,14 @@ module Validation
 
   module InstanceMethods
     def validate!
-      self.class.validations.each do |value|
+
+      if self.class.superclass == Object
+        src = self.class
+      else
+        src = self.class.superclass
+      end
+
+      src.validations.each do |value|
         send("validate_#{value[:type]}", value[:name], value[:args])
       end
     end
