@@ -1,0 +1,10 @@
+Style/StringLiterals: 
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Metrics/ClassLength:
+  Enabled: false
+Metrics/ModuleLength:
+  Enabled: false
+AllCops:
+  NewCops: enable
